@@ -12,11 +12,11 @@
     "db:pull": "pg_dump --format=c -h 192.168.0.100 -U vicnie wishlist | pg_restore --clean --no-owner -h localhost -d wishlist"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^6.1.0",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "lodash": "^4.17.15",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
