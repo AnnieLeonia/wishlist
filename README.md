@@ -1,6 +1,6 @@
 # wishlist
 
-> for Christmas
+> a wishlist for your Christmas
 
 ## Build Setup
 
