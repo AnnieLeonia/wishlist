@@ -32,7 +32,8 @@ const Wish = sequelize.define("wish", {
   wish: Sequelize.STRING,
   name: Sequelize.STRING,
   bought: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
-  buyer: Sequelize.STRING
+  buyer: Sequelize.STRING,
+  wisher: Sequelize.STRING
 });
 
 const User = sequelize.define("user", {

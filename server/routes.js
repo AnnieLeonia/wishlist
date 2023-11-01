@@ -50,7 +50,8 @@ module.exports = (app, passport, { User, Wish }) => {
   app.post("/api/wishes", isLoggedIn, async (req, res) => {
     const created = await Wish.create({
       name: req.body.name,
-      wish: req.body.wish
+      wish: req.body.wish,
+      wisher: req.body.wisher
     });
     const wishes = await Wish.findAll();
     res.send(wishes);
