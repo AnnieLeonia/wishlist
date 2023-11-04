@@ -78,10 +78,6 @@ export default {
 </script>
 
 <style scoped>
-form {
-    margin-bottom: 3em;
-}
-
 .form-content {
     display: flex;
     justify-content: center;

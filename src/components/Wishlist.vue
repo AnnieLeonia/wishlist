@@ -4,44 +4,13 @@
       <img v-if="true" class="photo" :src="getImage(user.name)" />
       <h2>{{ user.name }}</h2>
       <ul v-if="activeUser">
-        <li v-for="aWish in getUserWishes(user.name)" v-bind:key="aWish.id">
-          <span
-            class="wish"
-            v-on:click="
-              activeUser === user.name || aWish.wisher === activeUser
-                ? edit(aWish)
-                : null;
-            "
-          >
-            <span
-              v-bind:class="{
-                active: activeUser === user.name || aWish.wisher === activeUser
-              }"
-            >
-              {{ aWish.wish }}
-              <i v-if="aWish.wisher !== aWish.name" class="wisher">
-                av {{ aWish.wisher }}
-              </i>
-            </span>
-            <button
-              class="round edit"
-              v-if="user.name === activeUser || aWish.wisher === activeUser"
-            >
-              <img id="edit" src="../assets/edit.svg" />
-            </button>
-          </span>
-          <button
-            class="round"
-            v-if="user.name !== activeUser"
-            v-on:click="buyWish(aWish);"
-            v-bind:class="{
-              unavailable: aWish.bought,
-              available: !aWish.bought
-            }"
-          >
-            <span v-if="aWish.bought"> {{ aWish.buyer.charAt(0) }} </span>
-          </button>
-        </li>
+        <Wish
+          v-for="wish in getUserWishes(user.name)"
+          v-bind:key="wish.id"
+          :wish="wish"
+          :user="user"
+          @edit="() => editWish(wish)"
+        />
         <li v-if="getUserWishes(user.name).length === 0">
           <span class="no-wishes">Inga önskningar ännu!</span>
         </li>
@@ -53,6 +22,7 @@
 <script>
 import { sortBy } from "lodash";
 import EditDialog from "./EditDialog.vue";
+import Wish from "./Wish.vue";
 const utils = require("../utils");
 
 export default {
@@ -63,7 +33,8 @@ export default {
     };
   },
   components: {
-    EditDialog
+    EditDialog,
+    Wish
   },
   computed: {
     users: function() {
@@ -109,7 +80,7 @@ export default {
         this.$store.state.allWishes = wishes;
       }
     },
-    edit: function(wish) {
+    editWish: function(wish) {
       this.$modal.show(
         EditDialog,
         {
@@ -140,7 +111,7 @@ export default {
 
 <style scoped>
 main {
-  margin-top: 2em;
+  margin-top: 3em;
 }
 
 h2 {
@@ -155,63 +126,8 @@ ul {
   padding: 0;
 }
 
-li {
-  list-style: none;
-  text-align: left;
-  padding: 0.5em;
-  clear: both;
-  overflow: hidden;
-  font-size: 18px;
-  display: flex;
-}
-
-span {
-  flex: 1;
-}
-
-i {
-  font-size: 12px;
-  font-style: italic;
-  color: #666;
-}
-
 .no-wishes {
   text-align: center;
-}
-
-#edit {
-  height: 100%;
-  width: 100%;
-}
-
-.active {
-  border-bottom: dotted rgba(0, 0, 0, 0.2) 2px;
-}
-
-.round {
-  /* background-color: rgba(255, 255, 255, 0.8); */
-  text-transform: uppercase;
-  border: solid 1px black;
-  border-radius: 100%;
-  font-weight: bold;
-  font-size: 18px;
-  height: 2em;
-  width: 2em;
-  outline: none;
-}
-
-.edit {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.available {
-  background-color: #01ff70;
-}
-
-.unavailable {
-  background-color: orangered;
 }
 
 .user {
@@ -224,15 +140,6 @@ i {
   background-color: #001f3f;
   color: hsla(210, 100%, 75%, 1);
 }
-
-#ludwig .active {
-  border-bottom: dotted rgba(255, 255, 255, 0.2) 2px;
-}
-
-#ludwig .edit {
-  filter: invert(0.8);
-}
-
 #simon {
   background-color: #7fdbff;
 }
@@ -255,10 +162,6 @@ i {
   filter: saturate(0.5);
   transition: all 1s;
   transform: scale(1);
-}
-
-.wish {
-  display: flex;
 }
 
 .animate {
