@@ -38,13 +38,13 @@ export default {
     Wish
   },
   computed: {
-    users: function() {
+    users() {
       return this.$store.state.users;
     },
-    allWishes: function() {
+    allWishes() {
       return this.$store.state.allWishes;
     },
-    isOwner: function(wish) {
+    isOwner(wish) {
       return wish.wisher === this.activeUser;
     }
   },
@@ -52,7 +52,7 @@ export default {
     getImage(name) {
       return utils.getImage(name);
     },
-    getUserWishes: function(name) {
+    getUserWishes(name) {
       return this.allWishes
         .filter(
           wish =>
@@ -62,7 +62,7 @@ export default {
         )
         .sort((a, b) => a.id - b.id);
     },
-    buyWish: async function(wish) {
+    async buyWish(wish) {
       if (!wish.bought || wish.buyer === this.activeUser) {
         const res = await fetch("/api/wishes/" + wish.id, {
           method: "POST",
@@ -80,7 +80,7 @@ export default {
         this.$store.state.allWishes = wishes;
       }
     },
-    editWish: function(wish) {
+    editWish(wish) {
       this.$modal.show(
         EditDialog,
         {
@@ -95,7 +95,7 @@ export default {
       );
     }
   },
-  created: async function() {
+  async created() {
     const res_wishes = await this.$http.get("/api/wishes", {
       credentials: "include"
     });

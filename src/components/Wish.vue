@@ -7,9 +7,7 @@
         }"
       >
         {{ wish.wish }}
-        <i v-if="wish.wisher !== wish.name" class="wisher">
-          av {{ wish.wisher }}
-        </i>
+        <p v-if="wish.wisher !== wish.name">tips från {{ wish.wisher }}</p>
       </span>
       <button
         class="round edit"
@@ -41,7 +39,6 @@ export default {
       activeUser: this.$cookie.get("name")
     };
   },
-  computed: {},
   methods: {
     edit() {
       if (this.wish.wisher === this.activeUser) {
@@ -51,14 +48,15 @@ export default {
     buy() {
       this.$emit("buy");
     },
-    getUserWishes: function(name) {
+    getUserWishes(name) {
       return this.allWishes
-        .filter(
-          wish =>
-            wish.name === name &&
-            (wish.wisher === wish.name ||
-              (wish.wisher !== wish.name && name !== this.activeUser))
-        )
+        .filter(wish => {
+          const isWishForUser = wish.name === name;
+          const isWishByUser = wish.wisher === name;
+          const isWishByActiveUser = wish.wisher === this.activeUser;
+
+          return isWishForUser && (isWishByUser || !isWishByActiveUser);
+        })
         .sort((a, b) => a.id - b.id);
     }
   }
@@ -84,10 +82,10 @@ span {
   flex: 1;
 }
 
-i {
+p {
+  display: inline;
   font-size: 12px;
-  font-style: italic;
-  color: #666;
+  opacity: 0.5;
 }
 
 .active {
