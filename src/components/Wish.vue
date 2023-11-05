@@ -44,7 +44,9 @@ export default {
   computed: {},
   methods: {
     edit() {
-      this.$emit("edit");
+      if (this.wish.wisher === this.activeUser) {
+        this.$emit("edit");
+      }
     },
     buy() {
       this.$emit("buy");
