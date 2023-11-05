@@ -12,10 +12,10 @@
           @edit="() => editWish(wish)"
           @buy="() => buyWish(wish)"
         />
-        <li v-if="getUserWishes(user.name).length === 0">
-          <span class="no-wishes">Inga önskningar ännu!</span>
-        </li>
       </ul>
+      <li v-if="getUserWishes(user.name).length === 0">
+        <span class="no-wishes">Inga önskningar ännu!</span>
+      </li>
     </div>
   </main>
 </template>
@@ -124,6 +124,10 @@ h2 {
 ul {
   margin: 0;
   padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .no-wishes {
