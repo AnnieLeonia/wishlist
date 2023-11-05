@@ -62,7 +62,7 @@ export default {
       this.addWish(body);
     },
     async addWish(body) {
-      if (body.wish.replace(/ /g, "") != "") {
+      if (Object.values(body).every(field => field.trim() !== "")) {
         const res = await fetch("/api/wishes/", {
           method: "POST",
           body: JSON.stringify(body),
