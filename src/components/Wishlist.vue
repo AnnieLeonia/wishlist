@@ -10,6 +10,7 @@
           :wish="wish"
           :user="user"
           @edit="() => editWish(wish)"
+          @buy="() => buyWish(wish)"
         />
         <li v-if="getUserWishes(user.name).length === 0">
           <span class="no-wishes">Inga önskningar ännu!</span>
@@ -62,7 +63,6 @@ export default {
         .sort((a, b) => a.id - b.id);
     },
     buyWish: async function(wish) {
-      console.log("BUY");
       if (!wish.bought || wish.buyer === this.activeUser) {
         const res = await fetch("/api/wishes/" + wish.id, {
           method: "POST",

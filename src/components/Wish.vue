@@ -22,7 +22,7 @@
     <button
       class="round"
       v-if="user.name !== activeUser"
-      v-on:click="buyWish(wish);"
+      v-on:click="buy(wish);"
       v-bind:class="{
         unavailable: wish.bought,
         available: !wish.bought
@@ -45,6 +45,9 @@ export default {
   methods: {
     edit() {
       this.$emit("edit");
+    },
+    buy() {
+      this.$emit("buy");
     },
     getUserWishes: function(name) {
       return this.allWishes
