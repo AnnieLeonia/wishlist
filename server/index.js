@@ -17,16 +17,7 @@ app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-const sequelize = new Sequelize(
-  process.env.SEQUELIZE_DB,
-  process.env.SEQUELIZE_USERNAME,
-  process.env.SEQUELIZE_PASSWORD,
-  {
-    host: process.env.SEQUELIZE_HOST,
-    dialect: "postgres",
-    operatorsAliases: false
-  }
-);
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 const Wish = sequelize.define("wish", {
   wish: Sequelize.STRING,
